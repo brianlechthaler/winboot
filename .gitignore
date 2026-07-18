@@ -1,0 +1,9 @@
+# Editor / OS cruft
+*.swp
+*~
+.DS_Store
+.idea/
+.vscode/
+
+# Local runtime config (should live in /etc, never committed)
+winboot.conf

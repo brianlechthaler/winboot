@@ -13,16 +13,18 @@ default (usually Linux).
 
 ```bash
 winboot
+winboot --dry-run
 ```
 
-No arguments. The command must run as root; if it is not, it re-executes itself
-through `sudo`.
+The command must run as root; if it is not, it re-executes itself through `sudo`.
+`--dry-run` reports the boot ID that would be used without writing config, setting
+`BootNext`, or rebooting.
 
 ## Configuration
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `WINBOOT_CONFIG` | `/etc/winboot.conf` | Path to the file storing the cached Windows boot entry ID |
+| Config path | `/etc/winboot.conf` | Fixed path for the cached Windows boot entry ID |
 
 ## Troubleshooting
 

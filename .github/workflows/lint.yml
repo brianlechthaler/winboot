@@ -18,9 +18,9 @@ jobs:
   shellcheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@2.0.0
+        uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # 2.0.0
         with:
           scandir: .
           additional_files: winboot.sh winboot_test.sh
@@ -28,9 +28,11 @@ jobs:
   shfmt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Check formatting with shfmt
         run: |
+          expected_sha256=1f57a384d59542f8fac5f503da1f3ea44242f46dff969569e80b524d64b71dbc
           curl -fsSL "https://github.com/mvdan/sh/releases/download/v3.10.0/shfmt_v3.10.0_linux_amd64" -o /tmp/shfmt
+          echo "${expected_sha256}  /tmp/shfmt" | sha256sum -c -
           chmod +x /tmp/shfmt
           /tmp/shfmt -d -i 2 -ci winboot.sh winboot_test.sh

@@ -5,8 +5,10 @@ Find the Windows Boot Manager in UEFI entries and remember it.
 ## Overview
 
 On the first run (or whenever the config file is missing or empty), `winboot`
-parses `efibootmgr` output for entries labeled "Windows Boot Manager" and extracts
-their four-digit boot IDs. The result is cached so later runs skip the scan.
+parses `efibootmgr` output for entries labeled "Windows Boot Manager" whose path
+includes `\EFI\Microsoft\Boot\bootmgfw.efi`, and extracts their four-digit boot
+IDs. If none match that path, it falls back to label-only matches with a warning.
+The result is cached so later runs skip the scan.
 
 ## Behavior
 
@@ -22,9 +24,9 @@ or rebooting.
 
 ## Caching
 
-The chosen ID is written to `$WINBOOT_CONFIG` (default `/etc/winboot.conf`). A
-non-empty config file short-circuits discovery on future runs. Delete the file to
-re-scan:
+The chosen ID is written to `/etc/winboot.conf` (atomic write, mode `0644`). The
+file must remain a regular file that is not group/world-writable; symlinks and
+invalid IDs are refused. Delete the file to re-scan:
 
 ```bash
 sudo rm /etc/winboot.conf
